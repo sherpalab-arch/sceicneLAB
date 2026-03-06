@@ -172,7 +172,6 @@ const App = () => {
     ys.dispose();
   };
 
-  // 샘플 다양성 체크 (범위 확장 반영: 5~15도 구간, 35~45도 구간)
   const hasLowAngle = data.some(d => d.angle <= 15);
   const hasHighAngle = data.some(d => d.angle >= 35);
 
@@ -180,9 +179,9 @@ const App = () => {
   const currentLoss = lossHistory.length > 0 ? lossHistory[lossHistory.length - 1] : null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-950 text-white p-4 font-sans text-white">
+    <div className="flex flex-col min-h-screen bg-slate-950 text-white p-4 font-sans">
       <header className="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 text-white">
           <div className="bg-white p-2 rounded-xl shadow-lg shadow-white/10">
             <Brain size={32} className="text-slate-900" />
           </div>
@@ -200,7 +199,7 @@ const App = () => {
             </p>
           </div>
         </div>
-        <div className="bg-slate-900 px-5 py-2.5 rounded-2xl border border-slate-800 flex items-center gap-3 text-white">
+        <div className="bg-slate-900 px-5 py-2.5 rounded-2xl border border-slate-800 flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
           <div className="flex flex-col">
             <p className="text-emerald-400 text-[10px] font-bold uppercase tracking-widest leading-none">Neural Engine Online</p>
@@ -210,9 +209,8 @@ const App = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-3 space-y-4">
-          {/* 1. 데이터 수집 섹션 - 범위 수정 (5~45°) */}
           <div className="bg-slate-900 border border-slate-800 p-5 rounded-3xl shadow-xl border-indigo-500/10">
-            <div className="flex justify-between items-center mb-4 text-white">
+            <div className="flex justify-between items-center mb-4">
               <h2 className="text-indigo-400 font-black text-[11px] flex items-center gap-2 tracking-widest uppercase">
                 <Database size={14} /> 1. 데이터 수집 (5~45°)
               </h2>
@@ -246,13 +244,12 @@ const App = () => {
             </div>
           </div>
 
-          {/* 2. AI 신경망 학습 섹션 */}
           <div className="bg-slate-900 border border-slate-800 p-5 rounded-3xl shadow-xl">
             <div className="mb-4">
               <h2 className="text-emerald-400 font-black text-[11px] flex items-center gap-2 tracking-widest uppercase mb-1">
                 <Activity size={14} /> 2. AI 신경망 학습
               </h2>
-              <p className="text-slate-500 text-[10px] font-medium px-5">Powered by TensorFlow.js</p>
+              <p className="text-slate-500 text-[10px] font-medium px-5 uppercase">Powered by TensorFlow.js</p>
             </div>
             <div className="space-y-3">
               <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
@@ -270,7 +267,7 @@ const App = () => {
                 <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
                    <div className="h-full bg-emerald-500 transition-all duration-500" style={{width: `${Math.min(100, (data.length/10)*100)}%`}}></div>
                 </div>
-                <p className="text-slate-400 text-[10px] leading-relaxed italic text-white">{trainingStatus}</p>
+                <p className="text-slate-400 text-[10px] leading-relaxed italic">{trainingStatus}</p>
               </div>
               <button 
                 onClick={trainModel}
@@ -283,7 +280,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* 3. AI 학습모델 예측 가이드 섹션 */}
           <div className="bg-slate-900 border border-slate-800 p-5 rounded-3xl shadow-xl border-rose-500/10">
             <h2 className="text-rose-400 font-black text-[11px] mb-4 flex items-center gap-2 tracking-widest uppercase">
               <Target size={14} /> 3. AI 학습모델 예측 가이드
@@ -303,7 +299,7 @@ const App = () => {
               </div>
               <div className="bg-rose-500/5 border border-rose-500/10 p-5 rounded-2xl text-center">
                 <p className="text-[9px] text-slate-600 font-black uppercase mb-1 tracking-widest">AI 추천 조준 각도</p>
-                <div className="text-4xl font-black text-rose-500 font-mono tracking-tighter text-rose-500">
+                <div className="text-4xl font-black text-rose-500 font-mono tracking-tighter">
                   {prediction ? `${prediction.toFixed(1)}°` : "---"}
                 </div>
                 {!model && <p className="text-[9px] text-slate-500 mt-2 font-bold">학습 후 목표가 활성화됩니다</p>}
@@ -312,11 +308,10 @@ const App = () => {
           </div>
         </div>
 
-        {/* 메인 뷰 */}
         <div className="lg:col-span-9 space-y-6">
           <div className="bg-slate-900 rounded-[2.5rem] border border-slate-800 overflow-hidden relative shadow-2xl h-[400px]">
             <div className="absolute top-6 left-6 z-10 flex items-center gap-3">
-              <div className="bg-slate-950/90 px-4 py-2 rounded-xl border border-slate-800 backdrop-blur-xl flex items-center gap-3 shadow-2xl text-white text-white">
+              <div className="bg-slate-950/90 px-4 py-2 rounded-xl border border-slate-800 backdrop-blur-xl flex items-center gap-3 shadow-2xl text-white">
                 <div className={`w-2 h-2 rounded-full ${model ? 'bg-rose-500 animate-pulse' : 'bg-slate-700'}`}></div>
                 <span className="text-[10px] font-black tracking-wider uppercase">
                   {model ? 'AI 예측 모드 활성화됨' : '데이터 수집 대기 중...'}
@@ -324,26 +319,25 @@ const App = () => {
               </div>
             </div>
 
-            <svg width="100%" height="100%" viewBox="0 0 800 400" className="bg-slate-950 bg-slate-950">
+            <svg width="100%" height="100%" viewBox="0 0 800 400" className="bg-slate-950">
               <defs>
                 <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stopColor="#1e293b" />
                   <stop offset="100%" stopColor="#0f172a" />
                 </linearGradient>
               </defs>
-              
               <line x1="0" y1={GROUND_Y} x2="800" y2={GROUND_Y} stroke="#334155" strokeWidth="2" />
               <rect x="0" y={GROUND_Y} width="800" height="50" fill="url(#groundGrad)" />
               
               <g transform="translate(40, 40)">
                 <rect width="130" height={Math.max(40, 20 + Math.min(15, data.length) * 16)} rx="12" fill="#0f172a" fillOpacity="0.8" stroke="#1e293b" strokeWidth="1" />
-                <text x="10" y="18" fontSize="9" fontWeight="black" fill="#6366f1" className="uppercase tracking-widest text-indigo-500">최근 발사 로그</text>
+                <text x="10" y="18" fontSize="9" fontWeight="black" fill="#6366f1" className="uppercase tracking-widest">최근 발사 로그</text>
                 {data.length === 0 ? (
                   <text x="10" y="35" fontSize="9" fill="#475569" fontStyle="italic">데이터 없음...</text>
                 ) : (
                   data.slice(-15).reverse().map((d, i) => (
                     <g key={i} transform={`translate(10, ${36 + i * 16})`}>
-                      <text fontSize="10" fill="#94a3b8" fontWeight="bold" className="font-mono text-slate-400">
+                      <text fontSize="10" fill="#94a3b8" fontWeight="bold" className="font-mono">
                         {d.angle.toFixed(0)}° → {d.distance.toFixed(1)}m
                       </text>
                     </g>
@@ -356,7 +350,7 @@ const App = () => {
                   <circle r="20" fill="#f43f5e" fillOpacity="0.05" />
                   <circle r="6" fill="#f43f5e" />
                   <line y1="-30" y2="10" stroke="#f43f5e" strokeWidth="1.5" strokeDasharray="3,3" />
-                  <text y="-40" textAnchor="middle" fontSize="9" fontWeight="black" fill="#f43f5e" className="uppercase tracking-widest text-rose-500">목표</text>
+                  <text y="-40" textAnchor="middle" fontSize="9" fontWeight="black" fill="#f43f5e" className="uppercase tracking-widest">목표</text>
                 </g>
               )}
 
@@ -387,7 +381,7 @@ const App = () => {
               {lastResult && (
                 <g transform={`translate(${OFFSET_X + lastResult.distance * VISUAL_SCALE}, ${GROUND_Y})`}>
                     <path d="M -8 -15 L 0 0 L 8 -15 Z" fill="#fbbf24" />
-                    <text textAnchor="middle" fontSize="10" fontWeight="black" fill="#fbbf24" y="-20" className="font-mono text-amber-400">{lastResult.distance.toFixed(1)}m</text>
+                    <text textAnchor="middle" fontSize="10" fontWeight="black" fill="#fbbf24" y="-20" className="font-mono">{lastResult.distance.toFixed(1)}m</text>
                 </g>
               )}
 
@@ -402,7 +396,7 @@ const App = () => {
               <h3 className="text-[10px] font-black text-slate-500 mb-6 flex items-center gap-3 uppercase tracking-[0.25em]">
                 <TrendingUp size={16} className="text-rose-500" /> 신경망 상관관계 (데이터 분포)
               </h3>
-              <div className="h-[180px] relative px-2 text-center text-white font-sans text-white text-white">
+              <div className="h-[180px] relative px-2 text-center text-white font-sans">
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="overflow-visible">
                   <line x1="0" y1="100" x2="100" y2="100" stroke="#334155" strokeWidth="1" />
                   <line x1="0" y1="0" x2="0" y2="100" stroke="#334155" strokeWidth="1" />
@@ -435,25 +429,25 @@ const App = () => {
                 </svg>
                 <div className="flex justify-between mt-4 text-[9px] text-slate-600 font-black font-mono tracking-widest uppercase">
                   <span>0m</span>
-                  <span className="text-indigo-500/50 uppercase tracking-tighter">Data Analysis & Curve Fitting</span>
+                  <span className="text-indigo-500/50 uppercase tracking-tighter leading-none">Data Analysis & Curve Fitting</span>
                   <span>100m</span>
                 </div>
               </div>
             </div>
 
             <div className="bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden group">
-               <div className="flex justify-between items-center mb-6 text-white">
+               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-[10px] font-black text-slate-500 flex items-center gap-3 uppercase tracking-[0.25em]">
                   <Activity size={16} className="text-indigo-500" /> 실시간 학습 오차 (Loss Curve)
                 </h3>
-                {isTraining && <div className="text-[9px] text-emerald-400 font-bold animate-pulse tracking-tighter uppercase text-emerald-500">Optimizing...</div>}
+                {isTraining && <div className="text-[9px] text-emerald-400 font-bold animate-pulse tracking-tighter uppercase">Optimizing...</div>}
                </div>
                
-               <div className="h-[180px] relative mt-2 px-2 text-white">
+               <div className="h-[180px] relative mt-2 px-2">
                  {currentLoss !== null && (
                     <div className="absolute top-0 right-0 text-right z-20">
                         <div className="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Current Loss</div>
-                        <div className="text-xl font-black text-indigo-400 font-mono leading-none text-indigo-400">
+                        <div className="text-xl font-black text-indigo-400 font-mono leading-none">
                             {currentLoss.toFixed(6)}
                         </div>
                     </div>
